@@ -1,0 +1,38 @@
+<div class="login__card">
+  <h1>Welcome to BitGoals</h1>
+  <p>Bet against yourself and achieve greatness</p>
+  <nav ng-show="!showRegOrLogin">
+    <span href="#" class="button" ng-click="showRegister=true; showRegOrLogin=true">Register</span>
+    <span href="#" class="button"ng-click="showLogin=true; showRegOrLogin=true">Login</span>
+  </nav>
+  <section ng-show="showRegister">
+    <form>
+      <div class="row">
+        <div class="large-12">
+          <label>Password
+            <input type="text" placeholder="DON'T LOOSE THIS!" />
+          </label>
+          <button class="button">Submit</button>
+        </div>
+      </div>
+    </form>
+  </section>
+  <section ng-show="showLogin">
+    <form>
+      <div class="row">
+        <div class="large-12">
+          <label>Email
+            <input type="text" placeholder="Email" />
+          </label>
+          <label>Password
+            <input type="text" placeholder="Password" />
+          </label>
+          <label>Address
+            <input type="text" placeholder="Address" />
+          </label>
+          <button class="button">Submit</button>
+        </div>
+      </div>
+    </form> 
+  </section>
+</div>
