@@ -1,1 +1,30 @@
-<p>This is the about view.</p>
+<form ng-submit="create_goal()">
+  <div class="row">
+    <div class="large-12">
+      <label>Goal Name
+        <input ng-model="goal_name" type="text" placeholder="Goal Name" />
+      </label>
+    </div>
+    <div class="large-12">
+      <label>Bet Total
+        <input ng-model="bet_total" type="text" placeholder="Total Bet" />
+      </label>
+    </div>
+    <div class="large-12">
+      <label>Bet Increment
+        <input ng-model="bet_increment" type="text" placeholder="Bet Increment" />
+      </label>
+      <button class="button">New Goal</button>
+    </div>
+  </div>
+</form>
+
+
+<div class="row">
+  <nav class="medium-4 columns panel">
+  	<ul ng-repeat="goal in goals">
+  		<li>{{goal.name}}</li>
+  	</ul>
+  </nav>
+  <div class="medium-8 columns">9 columns</div>
+</div>
