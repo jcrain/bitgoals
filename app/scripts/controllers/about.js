@@ -30,5 +30,15 @@ angular.module('bitgoalsApp')
     ]
     $scope.create_goal = function(){
       console.log($scope.goal_name, $scope.bet_total, $scope.bet_increment);
+
     };
+
+    $scope.deploy_contract = function(){
+
+    };
+
+    $scope.send_money = function(){
+
+    };
+
   });

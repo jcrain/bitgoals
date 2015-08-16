@@ -44,6 +44,7 @@ angular.module('bitgoalsApp')
 
       $scope.keystore = keystore.serialize();
       console.log("this " +keystore.serialize());
+      $scope.non_serial = keystore;
       $scope.showRegister = true;
       $scope.showCreateAccount = false;
       $scope.account_wallet_address = keystore.addresses[0];
@@ -92,26 +93,35 @@ angular.module('bitgoalsApp')
     console.log(Contract);
     
     $scope.turn_on_faucet = function(res){
-    console.log("this is the res: " + res)
-    var data = JSON.parse(res);
-    
-    console.log("wallet: " + data.encryptedWallet);
-    console.log("addresses: " + JSON.parse(data.encryptedWallet).addresses);
-    var faucetAddr = JSON.parse(data.encryptedWallet).addresses;
-    var oReq = new XMLHttpRequest();
-    oReq.open("POST", apiURL + "/eth/v1.0/faucet", true);
-    var params = "address=" + encodeURIComponent(faucetAddr);
-    oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    oReq.onload = function () {
-      if (oReq.readyState == 4 && oReq.status == 200) {
-        console.log("faucet should have worked");
-      } else { 
-        console.log("error");
+      console.log("this is the res: " + res)
+      var data = JSON.parse(res);
+      
+      console.log("wallet: " + data.encryptedWallet);
+      console.log("addresses: " + JSON.parse(data.encryptedWallet).addresses);
+      var faucetAddr = JSON.parse(data.encryptedWallet).addresses;
+      var oReq = new XMLHttpRequest();
+      oReq.open("POST", apiURL + "/eth/v1.0/faucet", true);
+      var params = "address=" + encodeURIComponent(faucetAddr);
+      oReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      oReq.onload = function () {
+        if (oReq.readyState == 4 && oReq.status == 200) {
+          console.log("faucet should have worked");
+        } else { 
+          console.log("error");
+        }
       }
-    }
-    console.log("sending faucet request");
-    oReq.send(params);
-    console.log("faucet request sent");
-    }
+      console.log("sending faucet request");
+      oReq.send(params);
+      console.log("faucet request sent");
+    };
+
+    $scope.deploy_contract = function(){
+      console.log('running');
+      deployContract($scope.account_wallet_address, $scope.non_serial);
+    };
+
+    $scope.send_money = function(){
+
+    };
 
   });
