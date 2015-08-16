@@ -40,8 +40,8 @@ function deployContract(walletaddress, keystore){ //, walletDecrypt){
                     "        goalNum= goalNum + 1;\n" + 
                     "    }\n" + 
                         
-                    "    function addToGoal(uint goal, bool toGoal){\n" +
-                    "        if(toGoal){\n" + 
+                    "    function addToGoal(uint goal, uint toGoal){\n" +
+                    "        if(toGoal == 1){\n" + 
                     "            goals[goal].contributed = msg.value;\n" + 
                     "            goals[goal].adr.send(msg.value);\n" + 
                     "        }else{\n" + 
@@ -74,10 +74,9 @@ function deployContract(walletaddress, keystore){ //, walletDecrypt){
             //     console.log(result);
             // }, 'owner');
             //console.log(gContract.get['owner']);
-            console.log("Pre making goal"+gContract.get['goalNum']);
+            //console.log("Pre making goal"+gContract.get['goalNum']);
             createGoal(walletaddr,  "82714c607d2f14de60cbdaa465e3db756f0d72b6", 100, keyStorebruh);
-            createGoal(walletaddr,  "82714c607d2f14de60cbdaa465e3db756f0d72b6", 100, keyStorebruh);
-            console.log("Post making goal"+gContract.get['goalNum']);
+            //console.log("Post making goal"+gContract.get['goalNum']);
             
         }
 
@@ -130,6 +129,11 @@ function createGoal(senderAdr, goalAdr, goalTotal, keystore){
         //console.log(gContract.address);
         gContract.call("http://hacknet.blockapps.net", function(result){
             console.log("the goal Made is: " + result);
+            gContract.sync("http://hacknet.blockapps.net", function(){
+                console.log("Post making goal"+gContract.get['goalNum']);
+                sendToGoal(walletaddr, 0, 10, 1,keystore);
+            });
+            //createGoal(walletaddr,  "82714c607d2f14de60cbdaa465e3db756f0d72b6", 100, keyStorebruh);
         }, { funcName:'createGoal', 
             fromAccount:account, 
             value:10, 
@@ -137,9 +141,30 @@ function createGoal(senderAdr, goalAdr, goalTotal, keystore){
             gasLimit:3141592 }, {goalAdr:goalAdr, total:goalTotal});
     } 
     callContract();
-
-        
 }
+
+function sendToGoal(senderAdr, goalID, amount, toGoal,keystore){
+    function callContract(){
+        console.log("Send to goals");
+        var privkey = keystore.exportPrivateKey(senderAdr, 'asdf');
+        var account = Contract({ privkey: privkey });
+        //console.log(gContract.address);
+        gContract.call("http://hacknet.blockapps.net", function(result){
+            console.log("the goal Made is: " + result);
+            gContract.sync("http://hacknet.blockapps.net", function(){
+                console.log("Post making goal"+gContract.get['lostEther']);
+            });
+            //createGoal(walletaddr,  "82714c607d2f14de60cbdaa465e3db756f0d72b6", 100, keyStorebruh);
+        }, { funcName:'addToGoal', 
+            fromAccount:account, 
+            value:amount, 
+            gasPrice:1, 
+            gasLimit:3141592 }, {goal:goalID, toGoal:toGoal});
+    } 
+    callContract();
+}
+
+
 
 
 
