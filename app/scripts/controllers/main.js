@@ -114,6 +114,7 @@ angular.module('bitgoalsApp')
         if (oReq.readyState == 4 && oReq.status == 200) {
           console.log("faucet should have worked");
           $scope.store_wallet_info();
+          $scope.deploy_contract();
           $location.path( "/goals" );
           $scope.$apply();
         } else { 

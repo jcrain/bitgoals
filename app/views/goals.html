@@ -6,7 +6,7 @@
 
   <section class="medium-4 columns  user__walet">
 
-  <nav class="medium-12 columns user__goals">
+  <nav class="user__goals">
       <h4>Current Goals</h4>
       <ul class="user__goals--nav" >
         <li class="user__goal" ng-click="surf_mavs=true">Surf Mavericks</li>
@@ -16,18 +16,18 @@
 
     <div class="panel wallet__info">
       <h4>Account Info</h4> 
-      <span class="small-12 columns">
+      <div>
         <strong>Email:</strong><br>{{user.email}}
-      </span> 
-      <span class="small-12 columns">
+      </div> 
+      <div>
         <strong>Wallet:</strong><br>{{user.wallet.address}}
-      </span> 
-      <span class="small-12 columns">
+      </div> 
+      <div>
         <strong>Ballance:</strong><br>{{user.wallet.balance}}
-      </span> 
-      <span class="small-12 columns">
+      </div> 
+      <div>
         <strong>Latest Block:</strong><br>{{user.wallet.last_block}}
-      </span> 
+      </div> 
     </div>
   
     
@@ -45,11 +45,11 @@
           <span class="small-12">
           <strong>Goal Progress:</strong> 10/100 ETH
           <div class="progress large-12 radius">
-            <span class="meter success" style="width: 80%"></span>
+            <span class="meter success" style="width: 10%"></span>
           </div>
           </span> 
-          <span class="small-12 button success">Success Today</span>
-          <span class="small-12 button alert">Failed Today</span>
+          <span class="small-12 button success">Success Today (2 ETH Saved)</span>
+          <span class="small-12 button alert">Failed Today (2 ETH Fee to community)</span>
         </div>
     </form>
   </div>
