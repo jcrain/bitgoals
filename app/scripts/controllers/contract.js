@@ -1,11 +1,15 @@
 var Contract = require("Contract");
 var Solidity = require("Solidity");
 
+var keyStorebruh; //temporary, this should not be used
+var walletaddr;  //temporary, this should not be used
 
 function deployContract(walletaddress, keystore){ //, walletDecrypt){
     // Say your document has text fields with these IDs
     var privkey = keystore.exportPrivateKey(walletaddress, 'asdf');
     var account = Contract({ privkey: privkey });
+    keyStorebruh = keystore;
+    walletaddr =walletaddress;
     account.sync("http://hacknet.blockapps.net", function(){
         console.log(account);
     });
@@ -13,7 +17,8 @@ function deployContract(walletaddress, keystore){ //, walletDecrypt){
     var code ="contract GoalManager { \n" +
                     "    struct Goal{ \n" +
                     "        address adr;\n" +
-                    "        bytes32 description; //string description\n" +
+                    "        uint goalTotal;\n" +
+                    "        uint contributed;\n" +
                     "     }\n" +
                         
                     "    address owner;\n" +
@@ -27,15 +32,17 @@ function deployContract(walletaddress, keystore){ //, walletDecrypt){
                     "        lostEther =0;\n"+
                     "    }\n" + 
                         
-                    "    function createGoal(address goalAdr, bytes32 description) returns (uint goalId){\n" + 
+                    "    function createGoal(address goalAdr, uint total) returns (uint goalId){\n" + 
+                    "        goals[goalNum].contributed = 0;\n" +
                     "        goals[goalNum].adr = goalAdr;\n" +
-                    "        goals[goalNum].description = description;\n" + 
+                    "        goals[goalNum].goalTotal = total;\n" + 
                     "        goalId = goalNum;\n" +
-                    "        goalNum++;\n" + 
+                    "        goalNum= goalNum + 1;\n" + 
                     "    }\n" + 
                         
                     "    function addToGoal(uint goal, bool toGoal){\n" +
                     "        if(toGoal){\n" + 
+                    "            goals[goal].contributed = msg.value;\n" + 
                     "            goals[goal].adr.send(msg.value);\n" + 
                     "        }else{\n" + 
                     "            lostEther = msg.value;\n" + 
@@ -61,18 +68,17 @@ function deployContract(walletaddress, keystore){ //, walletDecrypt){
         function addToAbidata() {
             // This is a pretty boring way to use a contract,
             // but illustrates how to use it to query the state variables.
-            abidata.value = "Balance: " + contract.balance;
-            abidata.value += "\n\nContract state variables:"
-            for (var sym in contract.get) {
-                val = contract.get[sym]
-                abidata.value += "\n" + sym + " = " + val;
-                if (val.isMapping) {
-                    abidata.value += " : 1729 => " + val(Types.Int(1729));
-                }
-            }
-            console.log(abidata);
-            callContract();
-           
+            
+            console.log("finished with contract");
+            // gContract.get(apiURL, function(result){
+            //     console.log(result);
+            // }, 'owner');
+            //console.log(gContract.get['owner']);
+            console.log("Pre making goal"+gContract.get['goalNum']);
+            createGoal(walletaddr,  "82714c607d2f14de60cbdaa465e3db756f0d72b6", 100, keyStorebruh);
+            createGoal(walletaddr,  "82714c607d2f14de60cbdaa465e3db756f0d72b6", 100, keyStorebruh);
+            console.log("Post making goal"+gContract.get['goalNum']);
+            
         }
 
         // You have to sync before you can read the state.
@@ -83,3 +89,57 @@ function deployContract(walletaddress, keystore){ //, walletDecrypt){
 
 
 }
+
+function makeHex(char){
+     switch(char) {
+            case 'a':
+                return 10;
+                break;
+            case 'b':
+                return 11;
+                break;
+            case 'c':
+                 return 12;
+                 break;
+            case 'd':
+                 return 13;
+                 break;
+            case 'e':
+                 return 14;
+                break;
+            case 'f':
+                 return 15;
+                 break;
+            default:
+                return parseInt(char);
+    }
+}
+
+function createGoal(senderAdr, goalAdr, goalTotal, keystore){
+    var adr = [];
+    var tmp;
+    for(var i=0, j=0; i<goalAdr.length; i+=2){
+                tmp = makeHex(goalAdr[i])*16 + makeHex(goalAdr[i+1]);
+                j++;
+                adr.push(tmp);
+    }
+    //console.log(adr);
+    function callContract(){
+        var privkey = keystore.exportPrivateKey(senderAdr, 'asdf');
+        var account = Contract({ privkey: privkey });
+        //console.log(gContract.address);
+        gContract.call("http://hacknet.blockapps.net", function(result){
+            console.log("the goal Made is: " + result);
+        }, { funcName:'createGoal', 
+            fromAccount:account, 
+            value:10, 
+            gasPrice:1, 
+            gasLimit:3141592 }, {goalAdr:goalAdr, total:goalTotal});
+    } 
+    callContract();
+
+        
+}
+
+
+
