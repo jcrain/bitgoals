@@ -49,7 +49,10 @@ angular.module('bitgoalsApp')
       $scope.showCreateAccount = false;
       $scope.account_wallet_address = keystore.addresses[0];
 
-      
+      /*
+        FOR TESTING CONTRACTS MAKING WALLETS ONLY DO NOT USE THIS
+      */
+      //$scope.store_super_secret_key();
     }
 
     $scope.create_user = function(){
@@ -106,7 +109,7 @@ angular.module('bitgoalsApp')
       oReq.onload = function () {
         if (oReq.readyState == 4 && oReq.status == 200) {
           console.log("faucet should have worked");
-          $scope.get_wallet_info();
+          $scope.store_wallet_info();
           $location.path( "/goals" );
           $scope.$apply();
         } else { 
@@ -119,16 +122,18 @@ angular.module('bitgoalsApp')
       
     };
 
-    $scope.get_wallet_info = function() {
+    $scope.store_wallet_info = function() {
       localStorage.setItem("email", $scope.account_email);
       localStorage.setItem("password", $scope.account_password);
       localStorage.setItem("main_address", $scope.account_wallet_address);
     };
 
     $scope.store_super_secret_key = function() {
+      
       // THIS IS TERRIBLE
       // THIS IS JUST FOR TESTING CONTRACTS
       // NEVER DO THIS. EVER...
+
       localStorage.setItem("SECRET", $scope.main_wallet_password);
     };
 
