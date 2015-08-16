@@ -44,7 +44,11 @@ angular.module('bitgoalsApp')
 
       $scope.keystore = keystore.serialize();
       console.log("this " +keystore.serialize());
+
+
+      // This is for calling contracts
       $scope.non_serial = keystore;
+
       $scope.showRegister = true;
       $scope.showCreateAccount = false;
       $scope.account_wallet_address = keystore.addresses[0];
@@ -52,7 +56,7 @@ angular.module('bitgoalsApp')
       /*
         FOR TESTING CONTRACTS MAKING WALLETS ONLY DO NOT USE THIS
       */
-      //$scope.store_super_secret_key();
+      $scope.store_super_secret_key();
     }
 
     $scope.create_user = function(){
@@ -88,7 +92,7 @@ angular.module('bitgoalsApp')
           } 
         }
         oReq.send(params);
-    }
+    };
 
 
 
@@ -129,7 +133,7 @@ angular.module('bitgoalsApp')
     };
 
     $scope.store_super_secret_key = function() {
-      
+
       // THIS IS TERRIBLE
       // THIS IS JUST FOR TESTING CONTRACTS
       // NEVER DO THIS. EVER...

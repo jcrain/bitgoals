@@ -1,0 +1,81 @@
+
+<!--   <button ng-click="deploy_contract" class="button">Deploy</button>
+  <button ng-click="send_money" class="button">Send Money</button> -->
+
+<div class="row">
+
+  <section class="medium-4 columns  user__walet">
+
+  <nav class="medium-12 columns user__goals">
+      <h4>Current Goals</h4>
+      <ul class="user__goals--nav" >
+        <li class="user__goal" ng-click="surf_mavs=true">Surf Mavericks</li>
+      </ul>
+    </nav>
+
+
+    <div class="panel wallet__info">
+      <h4>Account Info</h4> 
+      <span class="small-12 columns">
+        <strong>Email:</strong><br>{{user.email}}
+      </span> 
+      <span class="small-12 columns">
+        <strong>Wallet:</strong><br>{{user.wallet.address}}
+      </span> 
+      <span class="small-12 columns">
+        <strong>Ballance:</strong><br>{{user.wallet.balance}}
+      </span> 
+      <span class="small-12 columns">
+        <strong>Latest Block:</strong><br>{{user.wallet.last_block}}
+      </span> 
+    </div>
+  
+    
+
+  </section>
+
+  
+  
+
+  
+
+  <div ng-show="surf_mavs" class="medium-8 columns">
+    <form  ng-submit="update_goal()">
+        <div class="large-12">
+          <span class="small-12">
+          <strong>Goal Progress:</strong> 10/100 ETH
+          <div class="progress large-12 radius">
+            <span class="meter success" style="width: 80%"></span>
+          </div>
+          </span> 
+          <span class="small-12 button success">Success Today</span>
+          <span class="small-12 button alert">Failed Today</span>
+        </div>
+    </form>
+  </div>
+
+  <div class="medium-8 columns">
+
+    <span ng-show="!create_goal_button" ng-click="create_goal_form=true; create_goal_button=true" class="button">Create A New Goal!</span>
+
+    <form ng-show="create_goal_form" ng-submit="create_goal()">
+        <div class="large-12">
+          <label>Goal Name
+            <input ng-model="goal_name" type="text" placeholder="Goal Name" />
+          </label>
+        </div>
+        <div class="large-12">
+          <label>Bet Total
+            <input ng-model="bet_total" type="text" placeholder="Total Bet" />
+          </label>
+        </div>
+        <div class="large-12">
+          <label>Bet Increment
+            <input ng-model="bet_increment" type="text" placeholder="Bet Increment"     />
+          </label>
+          <button class="button">Save Goal</button>
+        </div>
+    </form>
+  </div>
+
+</div>
