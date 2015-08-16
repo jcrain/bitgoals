@@ -7,7 +7,7 @@
  * Controller of the bitgoalsApp
  */
 angular.module('bitgoalsApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, $location) {
 
     this.awesomeThings = [
       'HTML5 Boilerplate',
@@ -106,6 +106,9 @@ angular.module('bitgoalsApp')
       oReq.onload = function () {
         if (oReq.readyState == 4 && oReq.status == 200) {
           console.log("faucet should have worked");
+          $scope.get_wallet_info();
+          $location.path( "/goals" );
+          $scope.$apply();
         } else { 
           console.log("error");
         }
@@ -113,6 +116,20 @@ angular.module('bitgoalsApp')
       console.log("sending faucet request");
       oReq.send(params);
       console.log("faucet request sent");
+      
+    };
+
+    $scope.get_wallet_info = function() {
+      localStorage.setItem("email", $scope.account_email);
+      localStorage.setItem("password", $scope.account_password);
+      localStorage.setItem("main_address", $scope.account_wallet_address);
+    };
+
+    $scope.store_super_secret_key = function() {
+      // THIS IS TERRIBLE
+      // THIS IS JUST FOR TESTING CONTRACTS
+      // NEVER DO THIS. EVER...
+      localStorage.setItem("SECRET", $scope.main_wallet_password);
     };
 
     $scope.deploy_contract = function(){
