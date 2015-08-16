@@ -16,6 +16,13 @@ angular.module('bitgoalsApp')
     ];
 
     var apiURL = "http://hacknet.blockapps.net";
+    var user_object = {
+      app: "bitgoals",
+      email: $scope.account_email,
+      loginpass: $scope.account_password,
+      address: $scope.account_wallet_address,
+      enckey: $scope.keystore
+    }
 
     $scope.user_object = {
       app: "bitgoals",
@@ -24,6 +31,7 @@ angular.module('bitgoalsApp')
       address: $scope.account_wallet_address,
       enckey: $scope.keystore
     }
+    console.log($scope.account_email);
 
     $scope.generate_account = function() {
       var pass = $scope.main_wallet_password;
@@ -35,9 +43,10 @@ angular.module('bitgoalsApp')
       var addr = keystore.generateNewAddress(pass);
 
       $scope.keystore = keystore.serialize();
+      console.log("this " +keystore.serialize());
       $scope.showRegister = true;
       $scope.showCreateAccount = false;
-      $scope.account_wallet_address = addr;
+      $scope.account_wallet_address = keystore.addresses[0];
 
       
     }
@@ -45,12 +54,19 @@ angular.module('bitgoalsApp')
     $scope.create_user = function(){
       var oReq = new XMLHttpRequest();
         oReq.open("POST", "http://hacknet.blockapps.net/eth/v1.0/wallet", true);
+        var user_object = {
+            app: "bitgoals",
+            email: $scope.account_email,
+            loginpass: $scope.account_password,
+            address: $scope.account_wallet_address,
+            enckey: $scope.keystore
+          };
 
-        var params = "app="+encodeURIComponent($scope.user_object.app)
-                       +"&email="+encodeURIComponent($scope.user_object.email)
-                       +"&loginpass=" + encodeURIComponent($scope.user_object.loginpass)
-                       +"&address=" + encodeURIComponent($scope.user_object.address)
-                       +"&enckey=" + encodeURIComponent($scope.user_object.enckey);
+        var params = "app="+encodeURIComponent(user_object.app)
+                       +"&email="+encodeURIComponent(user_object.email)
+                       +"&loginpass=" + encodeURIComponent(user_object.loginpass)
+                       +"&address=" + encodeURIComponent(user_object.address)
+                       +"&enckey=" + encodeURIComponent(user_object.enckey);
  
  
         console.log("params: " + params);
