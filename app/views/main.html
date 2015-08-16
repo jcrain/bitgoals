@@ -2,21 +2,41 @@
   <h1>Welcome to BitGoals</h1>
   <p>Bet against yourself and achieve greatness</p>
   <nav ng-show="!showRegOrLogin">
-    <span href="#" class="button" ng-click="showRegister=true; showRegOrLogin=true">Register</span>
+    <span href="#" class="button" ng-click="showCreateAccount=true; showRegOrLogin=true">Register</span>
     <span href="#" class="button"ng-click="showLogin=true; showRegOrLogin=true">Login</span>
   </nav>
-  <section ng-show="showRegister">
-    <form>
+  <section ng-show="showCreateAccount">
+    <form ng-submit="generate_account()">
       <div class="row">
         <div class="large-12">
           <label>Password
-            <input type="text" placeholder="DON'T LOOSE THIS!" />
+            <input ng-model="main_wallet_password" type="text" placeholder="DON'T LOOSE THIS!" />
           </label>
           <button class="button">Submit</button>
         </div>
       </div>
     </form>
   </section>
+
+  <section ng-show="showRegister">
+    <form ng-submit="create_user()">
+      <div class="row">
+        <div class="large-12">
+          <label>Email
+            <input ng-model="account_email" type="text" placeholder="Email" />
+          </label>
+          <label>Password
+            <input ng-model="account_password" type="text" placeholder="Password" />
+          </label>
+          <label>Account
+            <input ng-model="account_wallet_address" type="text" placeholder="Account" />
+          </label>
+          <button class="button">Submit</button>
+        </div>
+      </div>
+    </form>
+  </section>
+
   <section ng-show="showLogin">
     <form>
       <div class="row">

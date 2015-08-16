@@ -1,7 +1,8 @@
 # bitgoals
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.12.1.
+Angular app that lets you bet on goals for yourself.
+
+NOTE: This is a test app running on Blockapps.com's test ethereum network. 
 
 ## Build & development
 
