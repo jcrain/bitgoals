@@ -26,8 +26,8 @@ angular.module('bitgoalsApp')
 
     $scope.user_object = {
       app: "bitgoals",
-      email: $scope.account_email,
-      loginpass: $scope.account_password,
+      email: '',
+      loginpass: '',
       address: $scope.account_wallet_address,
       enckey: $scope.keystore
     }
