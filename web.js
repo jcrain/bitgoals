@@ -1,9 +1,8 @@
-'use strict';
-
 var gzippo = require('gzippo');
 var express = require('express');
-var nodeApp = express();
+var morgan = require('morgan');
+var app = express();
 
-nodeApp.use(logger('dev'));
-nodeApp.use(gzippo.staticGzip('' + __dirname + '/dist'));
-nodeApp.listen(process.env.PORT || 5000);
+app.use(morgan('dev'));
+app.use(gzippo.staticGzip("" + __dirname + "/dist"));
+app.listen(process.env.PORT || 5000);
